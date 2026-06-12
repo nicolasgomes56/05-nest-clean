@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CreateAccountController } from './controllers/create-account.controller';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   /**
    * Controllers é uma lista de controllers que serão instanciados.
    */
-  controllers: [AppController],
+  controllers: [CreateAccountController],
   /**
    * Providers é uma lista de serviços que serão injetados no controller.
    */
-  providers: [AppService],
+  providers: [PrismaService],
 })
 export class AppModule {}
