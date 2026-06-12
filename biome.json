@@ -23,6 +23,12 @@
       "recommended": true,
       "style": {
         "useImportType": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": {
+          "level": "warn",
+          "fix": "none"
+        }
       }
     }
   },
