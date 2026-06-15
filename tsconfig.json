@@ -15,9 +15,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
@@ -27,8 +25,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "types": [
-      "vitest/globals"
-    ]
+    "types": ["vitest/globals"]
   }
 }
