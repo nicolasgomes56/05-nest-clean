@@ -18,14 +18,14 @@ function generateUniqueDatabaseURL(schemaId: string) {
   return url.toString();
 }
 
+const databaseURL = generateUniqueDatabaseURL(schemaId);
+
+process.env.DATABASE_URL = databaseURL;
+process.env.DATABASE_SCHEMA = schemaId;
+
 let prisma: PrismaClient;
 
 beforeAll(async () => {
-  const databaseURL = generateUniqueDatabaseURL(schemaId);
-
-  process.env.DATABASE_URL = databaseURL;
-  process.env.DATABASE_SCHEMA = schemaId;
-
   const adapter = new PrismaPg({
     connectionString: databaseURL,
   });
