@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { execSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from 'generated/prisma/client';
+import { PrismaClient } from '../generated/prisma/client';
 
 const schemaId = randomUUID();
 
