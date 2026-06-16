@@ -4,7 +4,6 @@ import { DomainEvent } from './domain-event';
 
 type DomainEventCallback = (event: unknown) => void;
 
-// biome-ignore lint/complexity/noStaticOnlyClass: This class is meant to be static for DDD Domain Events pattern
 export class DomainEvents {
   private static handlersMap: Record<string, DomainEventCallback[]> = {};
   private static markedAggregates: AggregateRoot<unknown>[] = [];

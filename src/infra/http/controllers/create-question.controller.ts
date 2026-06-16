@@ -1,9 +1,8 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 import z from 'zod';
+import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/create-question';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import type { UserPayload } from '@/infra/auth/jwt.strategy';
-import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard';
-import { PrismaService } from '@/infra/prisma/prisma.service';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 
 const createQuestionBodySchema = z.object({
@@ -15,9 +14,8 @@ const bodyValidationPipe = new ZodValidationPipe(createQuestionBodySchema);
 type CreateQuestionBodySchema = z.infer<typeof createQuestionBodySchema>;
 
 @Controller('/questions')
-@UseGuards(JwtAuthGuard)
 export class CreateQuestionController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private createQuestion: CreateQuestionUseCase) {}
 
   @Post()
   async handle(
@@ -27,25 +25,15 @@ export class CreateQuestionController {
     const { title, content } = body;
     const userId = user.sub;
 
-    const slug = this.convertToSlug(title);
-
-    await this.prisma.question.create({
-      data: {
-        title,
-        content,
-        slug,
-        authorId: userId,
-      },
+    const result = await this.createQuestion.execute({
+      title,
+      content,
+      authorId: userId,
+      attachmentsIds: [],
     });
-  }
 
-  private convertToSlug(title: string) {
-    return title
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // remove acentos
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-') // substituir espaços por hífens
-      .replace(/^-+|-+$/g, ''); // remover hífens no início e fim
+    if (result.isLeft()) {
+      throw new BadRequestException();
+    }
   }
 }
