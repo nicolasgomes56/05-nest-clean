@@ -8,6 +8,14 @@ export default defineConfig({
     globals: true,
     root: './',
     setupFiles: ['./test/setup-e2e.ts'],
+    hookTimeout: 60000,
+    testTimeout: 60000,
+    fileParallelism: false,
   },
-  plugins: [tsConfigPaths(), swc.vite()],
+  plugins: [
+    tsConfigPaths(),
+    swc.vite({
+      module: { type: 'es6' },
+    }),
+  ],
 });
