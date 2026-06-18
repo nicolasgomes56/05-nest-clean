@@ -9,7 +9,7 @@ import { AppModule } from '@/infra/app.module';
 import { DatabaseModule } from '@/infra/database/prisma/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 
-describe('Edit answer (E2E)', () => {
+describe('Choose question best answer (E2E)', () => {
   let app: INestApplication;
   let jwt: JwtService;
   let prisma: PrismaService;
@@ -33,7 +33,7 @@ describe('Edit answer (E2E)', () => {
     await app.init();
   });
 
-  test('[PUT] /answers/:id', async () => {
+  test('[PATCH] /answers/:answerId/choose-as-best', async () => {
     const user = await studentFactory.makePrismaStudent();
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
@@ -50,20 +50,18 @@ describe('Edit answer (E2E)', () => {
     const answerId = answer.id.toString();
 
     const response = await request(app.getHttpServer())
-      .put(`/answers/${answerId}`)
+      .patch(`/answers/${answerId}/choose-as-best`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        content: 'New answer content',
-      });
+      .send();
 
     expect(response.statusCode).toBe(204);
 
-    const answerOnDatabase = await prisma.answer.findFirst({
+    const questionOnDatabase = await prisma.question.findUnique({
       where: {
-        content: 'New answer content',
+        id: question.id.toString(),
       },
     });
 
-    expect(answerOnDatabase).toBeTruthy();
+    expect(questionOnDatabase?.bestAnswerId).toEqual(answerId);
   });
 });

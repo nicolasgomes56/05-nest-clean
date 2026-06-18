@@ -7,15 +7,13 @@ import { StudentFactory } from '@test/factories/make-student';
 import request from 'supertest';
 import { AppModule } from '@/infra/app.module';
 import { DatabaseModule } from '@/infra/database/prisma/database.module';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
 
-describe('Edit answer (E2E)', () => {
+describe('Fetch question answers (E2E)', () => {
   let app: INestApplication;
   let jwt: JwtService;
-  let prisma: PrismaService;
   let studentFactory: StudentFactory;
-  let questionFactory: QuestionFactory;
   let answerFactory: AnswerFactory;
+  let questionFactory: QuestionFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -25,15 +23,14 @@ describe('Edit answer (E2E)', () => {
 
     app = moduleRef.createNestApplication();
     jwt = moduleRef.get(JwtService);
-    prisma = moduleRef.get(PrismaService);
     studentFactory = moduleRef.get(StudentFactory);
-    questionFactory = moduleRef.get(QuestionFactory);
     answerFactory = moduleRef.get(AnswerFactory);
+    questionFactory = moduleRef.get(QuestionFactory);
 
     await app.init();
   });
 
-  test('[PUT] /answers/:id', async () => {
+  test('[GET] /questions/:questionId/answers', async () => {
     const user = await studentFactory.makePrismaStudent();
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
@@ -42,28 +39,30 @@ describe('Edit answer (E2E)', () => {
       authorId: user.id,
     });
 
-    const answer = await answerFactory.makePrismaAnswer({
-      questionId: question.id,
-      authorId: user.id,
-    });
-
-    const answerId = answer.id.toString();
+    await Promise.all([
+      answerFactory.makePrismaAnswer({
+        authorId: user.id,
+        questionId: question.id,
+        content: 'New answer 1',
+      }),
+      answerFactory.makePrismaAnswer({
+        authorId: user.id,
+        questionId: question.id,
+        content: 'New answer 2',
+      }),
+    ]);
 
     const response = await request(app.getHttpServer())
-      .put(`/answers/${answerId}`)
+      .get(`/questions/${question.id.toString()}/answers`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        content: 'New answer content',
-      });
+      .send();
 
-    expect(response.statusCode).toBe(204);
-
-    const answerOnDatabase = await prisma.answer.findFirst({
-      where: {
-        content: 'New answer content',
-      },
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({
+      answers: expect.arrayContaining([
+        expect.objectContaining({ content: 'New answer 1' }),
+        expect.objectContaining({ content: 'New answer 2' }),
+      ]),
     });
-
-    expect(answerOnDatabase).toBeTruthy();
   });
 });
