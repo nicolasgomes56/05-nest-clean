@@ -14,6 +14,8 @@ import { PrismaQuestionAttachmentsRepository } from './repositories/prisma-quest
 import { PrismaQuestionsCommentsRepository } from './repositories/prisma-questions-comments-repository';
 import { PrismaQuestionsRepository } from './repositories/prisma-questions-repository';
 import { PrismaStudentRepository } from './repositories/pristma-student-repository';
+import { AttachmentsRepository } from '@/domain/forum/application/repositories/attachments-repository';
+import { PrismaAttachmentsRepository } from './repositories/prisma-attachments-repository';
 
 @Module({
   providers: [
@@ -46,6 +48,10 @@ import { PrismaStudentRepository } from './repositories/pristma-student-reposito
       provide: AnswerAttachmentsRepository,
       useClass: PrismaAnswerAttachmentsRepository,
     },
+    {
+      provide: AttachmentsRepository,
+      useClass: PrismaAttachmentsRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -56,6 +62,7 @@ import { PrismaStudentRepository } from './repositories/pristma-student-reposito
     AnswersRepository,
     AnswerCommentsRepository,
     AnswerAttachmentsRepository,
+    AttachmentsRepository,
   ],
   // Todo modulo que importar DatabaseModule terá acesso ao PrismaService
 })

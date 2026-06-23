@@ -21,18 +21,19 @@
     "test:e2e:watch": "vitest watch --config ./vitest.config.e2e.ts"
   },
   "dependencies": {
-    "@nestjs/common": "^11.1.26",
+    "@aws-sdk/client-s3": "^3.1073.0",
+    "@nestjs/common": "^11.1.27",
     "@nestjs/config": "^4.0.4",
-    "@nestjs/core": "^11.1.26",
+    "@nestjs/core": "^11.1.27",
     "@nestjs/jwt": "^11.0.2",
     "@nestjs/passport": "^11.0.5",
-    "@nestjs/platform-express": "^11.1.26",
+    "@nestjs/platform-express": "^11.1.27",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "bcryptjs": "^3.0.3",
     "dayjs": "^1.11.21",
     "passport-jwt": "^4.0.1",
-    "pg": "^8.21.0",
+    "pg": "^8.22.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "zod": "^4.4.3",
@@ -40,16 +41,17 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.0",
-    "@faker-js/faker": "^10.4.0",
+    "@faker-js/faker": "^10.5.0",
     "@nestjs/cli": "^11.0.23",
     "@nestjs/schematics": "^11.1.0",
-    "@nestjs/testing": "^11.1.26",
+    "@nestjs/testing": "^11.1.27",
     "@swc/core": "^1.15.41",
     "@types/express": "^5.0.6",
-    "@types/node": "^25.9.3",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^26.0.0",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^7.2.0",
-    "@vitest/coverage-v8": "^4.1.8",
+    "@vitest/coverage-v8": "^4.1.9",
     "dotenv": "^17.4.2",
     "prisma": "^7.8.0",
     "source-map-support": "^0.5.21",
@@ -59,6 +61,6 @@
     "typescript": "^6.0.3",
     "unplugin-swc": "^1.5.9",
     "vite-tsconfig-paths": "^6.1.1",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.9"
   }
 }
