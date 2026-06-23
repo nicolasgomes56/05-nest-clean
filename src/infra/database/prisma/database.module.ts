@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AnswerAttachmentsRepository } from '@/domain/forum/application/repositories/answer-attachments-repository';
 import { AnswerCommentsRepository } from '@/domain/forum/application/repositories/answer-comments-repository';
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository';
+import { AttachmentsRepository } from '@/domain/forum/application/repositories/attachments-repository';
 import { QuestionAttachmentsRepository } from '@/domain/forum/application/repositories/question-attachments-repository';
 import { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository';
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository';
@@ -10,12 +11,11 @@ import { PrismaService } from './prisma.service';
 import { PrismaAnswerCommentsRepository } from './repositories/prisma-answer-comments-repository';
 import { PrismaAnswerAttachmentsRepository } from './repositories/prisma-anwser-attachments-repository';
 import { PrismaAnswersRepository } from './repositories/prisma-anwsers-repository';
+import { PrismaAttachmentsRepository } from './repositories/prisma-attachments-repository';
 import { PrismaQuestionAttachmentsRepository } from './repositories/prisma-question-attachments-repository';
 import { PrismaQuestionsCommentsRepository } from './repositories/prisma-questions-comments-repository';
 import { PrismaQuestionsRepository } from './repositories/prisma-questions-repository';
 import { PrismaStudentRepository } from './repositories/pristma-student-repository';
-import { AttachmentsRepository } from '@/domain/forum/application/repositories/attachments-repository';
-import { PrismaAttachmentsRepository } from './repositories/prisma-attachments-repository';
 
 @Module({
   providers: [

@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { Either, left, right } from '@/core/either';
-import { InvalidAttachmentType } from './errors/invalid-attachment-type';
 import { Attachment } from '../../enterprise/entities/attachment';
 import { AttachmentsRepository } from '../repositories/attachments-repository';
 import { Uploader } from '../storage/uploader';
+import { InvalidAttachmentType } from './errors/invalid-attachment-type';
 
 interface UploadAndCreateAttachmentsUseCaseRequest {
-  fileName: string
-  fileType: string
-  body: Buffer
+  fileName: string;
+  fileType: string;
+  body: Buffer;
 }
 
 type UploadAndCreateAttachmentsUseCaseResponse = Either<
   InvalidAttachmentType,
   {
-    attachment: Attachment
+    attachment: Attachment;
   }
 >;
 
@@ -22,7 +22,7 @@ type UploadAndCreateAttachmentsUseCaseResponse = Either<
 export class UploadAndCreateAttachmentsUseCase {
   constructor(
     private attachmentsRepository: AttachmentsRepository,
-    private uploader: Uploader
+    private uploader: Uploader,
   ) {}
 
   async execute({
@@ -37,15 +37,15 @@ export class UploadAndCreateAttachmentsUseCase {
     const { url } = await this.uploader.upload({
       fileName,
       fileType,
-      body
-    })
+      body,
+    });
 
     const attachment = Attachment.create({
       title: fileName,
-      url
-    })
+      url,
+    });
 
-    await this.attachmentsRepository.create(attachment)
+    await this.attachmentsRepository.create(attachment);
 
     return right({
       attachment,

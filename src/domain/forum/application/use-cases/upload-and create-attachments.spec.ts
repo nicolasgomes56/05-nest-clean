@@ -1,7 +1,7 @@
 import { InMemoryAttachmentsRepository } from '@test/repositories/in-memory-attachments-repository';
-import { UploadAndCreateAttachmentsUseCase } from './upload-and create-attachments';
 import { FakeUploader } from '@test/storage/fake-uploader';
 import { InvalidAttachmentType } from './errors/invalid-attachment-type';
+import { UploadAndCreateAttachmentsUseCase } from './upload-and create-attachments';
 
 let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository;
 let fakeUploader: FakeUploader;
@@ -28,9 +28,11 @@ describe('Upload And Create Attachments', () => {
     });
 
     expect(fakeUploader.uploads).toHaveLength(1);
-    expect(fakeUploader.uploads[0]).toEqual(expect.objectContaining({
-      fileName: 'profile.png',
-    }));
+    expect(fakeUploader.uploads[0]).toEqual(
+      expect.objectContaining({
+        fileName: 'profile.png',
+      }),
+    );
   });
 
   it('should not be able to upload an attachment with a invalid file type', async () => {
@@ -41,6 +43,6 @@ describe('Upload And Create Attachments', () => {
     });
 
     expect(result.isLeft()).toBe(true);
-    expect(result.value).toBeInstanceOf(InvalidAttachmentType)
+    expect(result.value).toBeInstanceOf(InvalidAttachmentType);
   });
 });

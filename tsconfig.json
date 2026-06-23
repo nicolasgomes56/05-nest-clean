@@ -13,12 +13,8 @@
     "sourceMap": true,
     "outDir": "./dist",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@test/*": [
-        "./test/*"
-      ]
+      "@/*": ["./src/*"],
+      "@test/*": ["./test/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
@@ -28,9 +24,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "types": [
-      "vitest/globals",
-      "multer"
-    ]
+    "types": ["vitest/globals", "multer"]
   }
 }
