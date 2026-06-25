@@ -17,7 +17,7 @@ export class PrismaQuestionAttachmentsRepository implements QuestionAttachmentsR
 
     return attachments.map(PrismaQuestionAttachmentMapper.toDomain);
   }
-  
+
   async deleteManyByQuestionId(questionId: string): Promise<void> {
     await this.prisma.attachment.deleteMany({
       where: {

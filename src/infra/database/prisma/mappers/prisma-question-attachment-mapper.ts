@@ -20,11 +20,9 @@ export class PrismaQuestionAttachmentMapper {
   static toPersistenceUpdateMany(
     attachments: QuestionAttachment[],
   ): Prisma.AttachmentUpdateManyArgs {
-
     const attachmentIds = attachments.map((attachment) => {
       return attachment.attachmentId.toString();
     });
-
 
     return {
       where: {
@@ -35,6 +33,6 @@ export class PrismaQuestionAttachmentMapper {
       data: {
         questionId: attachments[0].questionId.toString(),
       },
-    }
+    };
   }
 }
