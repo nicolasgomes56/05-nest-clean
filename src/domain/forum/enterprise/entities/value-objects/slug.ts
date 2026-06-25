@@ -10,11 +10,11 @@ export class Slug {
   }
 
   /**
-   * Receives a string and normalize it as a slug.
+   * Recebe um texto e o transforma em slug
    *
-   * Example: "An example title" => "an-example-title"
+   * @example createFromText("Uma pergunta qualquer") = "uma-pergunta-qualquer"
    *
-   * @param text {string}
+   * @param text O texto a ser transformado em slug
    */
   static createFromText(text: string): Slug {
     const slugText = text

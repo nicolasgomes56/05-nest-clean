@@ -1,3 +1,9 @@
+/**
+ * @description  WatchedList é uma lista que monitora itens adicionados, removidos e mantidos.
+ * Permite que a entidade saiba quais itens foram adicionados, removidos e mantidos.
+ * Diferente de uma lista normal, ela armazena o estado inicial dos itens.
+ * @template T - Tipo do item
+ */
 export abstract class WatchedList<T> {
   public currentItems: T[];
   private initial: T[];

@@ -5,13 +5,14 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import type { UserPayload } from '@/infra/auth/jwt.strategy';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 
-const createQuestionBodySchema = z.object({
+const editQuestionBodySchema = z.object({
   title: z.string(),
   content: z.string(),
+  attachments: z.array(z.uuid()).default([]),
 });
-const bodyValidationPipe = new ZodValidationPipe(createQuestionBodySchema);
+const bodyValidationPipe = new ZodValidationPipe(editQuestionBodySchema);
 
-type CreateQuestionBodySchema = z.infer<typeof createQuestionBodySchema>;
+type EditQuestionBodySchema = z.infer<typeof editQuestionBodySchema>;
 
 @Controller('/questions/:id')
 export class EditQuestionController {
@@ -20,18 +21,18 @@ export class EditQuestionController {
   @Put()
   @HttpCode(204)
   async handle(
-    @Body(bodyValidationPipe) body: CreateQuestionBodySchema,
+    @Body(bodyValidationPipe) body: EditQuestionBodySchema,
     @CurrentUser() user: UserPayload,
     @Param('id') questionId: string,
   ) {
-    const { title, content } = body;
+    const { title, content, attachments } = body;
     const userId = user.sub;
 
     const result = await this.editQuestion.execute({
       title,
       content,
       authorId: userId,
-      attachmentsIds: [],
+      attachmentsIds: attachments,
       questionId,
     });
 
