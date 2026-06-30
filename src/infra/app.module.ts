@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { envSchema } from './auth/env/env';
 import { EnvModule } from './auth/env/env.module';
+import { EventsModule } from './events/events.module';
 import { HttpModule } from './http/http.module';
 
 @Module({
@@ -15,6 +16,7 @@ import { HttpModule } from './http/http.module';
     AuthModule,
     HttpModule,
     EnvModule,
+    EventsModule,
   ],
   // Providers é uma lista de serviços que serão injetados no controller.
 })
