@@ -8,6 +8,7 @@ import { QuestionCommentsRepository } from '@/domain/forum/application/repositor
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository';
 import { StudentsRepository } from '@/domain/forum/application/repositories/students-repository';
 import { NotificationsRepository } from '@/domain/notification/application/repositories/notifications-repository';
+import { CacheModule } from '@/infra/cache/cache.module';
 import { PrismaService } from './prisma.service';
 import { PrismaAnswerCommentsRepository } from './repositories/prisma-answer-comments-repository';
 import { PrismaAnswerAttachmentsRepository } from './repositories/prisma-anwser-attachments-repository';
@@ -20,6 +21,7 @@ import { PrismaQuestionsRepository } from './repositories/prisma-questions-repos
 import { PrismaStudentRepository } from './repositories/pristma-student-repository';
 
 @Module({
+  imports: [CacheModule],
   providers: [
     PrismaService,
     {
